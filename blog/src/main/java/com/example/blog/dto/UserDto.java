@@ -1,35 +1,34 @@
-package com.example.blog.bean;
+package com.example.blog.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 
+/**
+ * 去除敏感信息的数据传输对象
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("m_blog")
-public class Blog {
+public class UserDto {
 
-    @TableId(value = "id",type = IdType.AUTO)
     private Long id;
 
-    private Long userId;
+    private String username;
 
-    private String title;
+    private String avatar;
 
-    private String description;
+    private String email;
 
-    private String content;
+    private Integer status;
 
     private LocalDateTime created;
 
-    private Integer status;
+    private LocalDateTime lastLogin;
 }

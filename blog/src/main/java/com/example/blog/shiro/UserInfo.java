@@ -3,9 +3,10 @@ package com.example.blog.shiro;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
-public class UserDTO {
+public class UserInfo {
 
     private Long id;
 
@@ -17,7 +18,7 @@ public class UserDTO {
 
     private Integer status;
 
-    private Timestamp created;
+    private LocalDateTime created;
 
-    private Timestamp lastLogin;
+    private LocalDateTime lastLogin;
 }

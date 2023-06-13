@@ -75,11 +75,11 @@ public class ShiroConfig {
     public ShiroFilterChainDefinition shiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
         Map<String, String> filterMap = new LinkedHashMap<>();
-        /*
+        /**
          * anon：匿名拦截器，不需登录就能访问，一般用于静态资源，或者移动端接口。
          * authc：登录拦截器，需要登录认证才能访问的资源
          *
-        */
+        **/
 //        filterMap.put("/**", "authc"); // 测试
         filterMap.put("/**", "jwt"); // jwt校验方式
 

@@ -11,6 +11,26 @@ public class Result implements Serializable {
     private String msg;
     private Object data;
 
+    public static Result success(){
+        Result result = new Result();
+        result.setCode("0");
+        result.setData(null);
+        return result;
+    }
+    public static Result success(String msg){
+        Result result = new Result();
+        result.setCode("0");
+        result.setData(null);
+        result.setMsg(msg);
+        return result;
+    }
+    public static Result success(Object data){
+        Result result = new Result();
+        result.setCode("0");
+        result.setData(data);
+        return result;
+    }
+
     public static Result success(String msg,Object data){
         Result result = new Result();
         result.setCode("0");

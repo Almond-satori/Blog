@@ -57,11 +57,11 @@ public class AccountRealm extends AuthorizingRealm {
             throw new AccountException("用户被锁定");
         }
         // 封装一个 用户的数据传输对象
-        UserDTO userDTO = new UserDTO();
-        BeanUtil.copyProperties(user, userDTO);
+        UserInfo userInfo = new UserInfo();
+        BeanUtil.copyProperties(user, userInfo);
 
         // 返回SimpleAuthenticationInfo代表校验成功
         // 返回null代表校验失败(这里直接抛出异常了)
-        return new SimpleAuthenticationInfo(userDTO,token.getCredentials(),getName());
+        return new SimpleAuthenticationInfo(userInfo,token.getCredentials(),getName());
     }
 }

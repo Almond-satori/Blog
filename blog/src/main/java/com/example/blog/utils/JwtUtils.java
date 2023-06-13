@@ -11,7 +11,7 @@ import java.util.Date;
 @Slf4j
 @Data
 @Component
-@ConfigurationProperties("almond.jwt") //用于获取在Application.yaml中的配置信息
+@ConfigurationProperties("almond.jwt") //创建对象时获取在Application.yaml中的配置信息
 public class JwtUtils {
     private String secret;
     private long expire;
