@@ -19,13 +19,12 @@
           <el-form-item label="密码" prop="password">
             <el-input type="password" v-model="ruleForm.password"></el-input>
           </el-form-item>
-          
+
           <el-form-item>
             <el-button type="primary" @click="submitForm('ruleForm')">
-                立即登录
+              立即登录
             </el-button>
             <el-button @click="resetForm('ruleForm')">重置</el-button>
-
           </el-form-item>
         </el-form>
       </el-main>
@@ -45,11 +44,16 @@ export default {
       rules: {
         username: [
           { required: true, message: "请输入用户名", trigger: "blur" },
-          { min: 3, max: 15, message: "长度在 3 到 15 个字符", trigger: "blur" },
+          {
+            min: 3,
+            max: 15,
+            message: "长度在 3 到 15 个字符",
+            trigger: "blur",
+          },
         ],
         password: [
           { required: true, message: "请输入密码", trigger: "change" },
-        ]
+        ],
       },
     };
   },
@@ -57,9 +61,25 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert("submit!");
+          const _this = this; // 获取全局this对象
+          this.$axios
+            .post("/user/login", this.ruleForm)
+            .then((res) => {
+              const token = res.headers["authorization"];
+
+              // 将token以及后台的user信息存储在全局(即存在store里)
+              _this.$store.commit('SET_TOKEN',token)
+              _this.$store.commit('SET_USERINFO',res.data.data)
+              // 删除表单信息u
+              this.ruleForm.username = ''
+              this.ruleForm.password = ''
+
+              _this.$router.push("/blogs")
+            }).catch((error)=>{
+              console.log(error)
+            })
         } else {
-          console.log("error submit!!");
+          console.log("输入不合法，请重新输入");
           return false;
         }
       });
@@ -111,8 +131,8 @@ body > .el-container {
   width: 80px;
 }
 
-.demo-ruleForm{
-    max-width: 500px;
-    margin: 0 auto;
+.demo-ruleForm {
+  max-width: 500px;
+  margin: 0 auto;
 }
 </style>

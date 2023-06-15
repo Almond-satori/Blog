@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = RuntimeException.class)
     public Result handler(RuntimeException e){
-        log.error("运行时异常: -----{}",e.getMessage());
+        log.error("运行时异常: -----{}",e.toString());
         return Result.fail(e.getMessage());
     }
 
@@ -28,6 +28,7 @@ public class GlobalExceptionHandler {
         return Result.fail("401",e.getMessage(),null);
     }
 
+    @ResponseStatus(HttpStatus.UNAUTHORIZED) // test
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public Result handler(MethodArgumentNotValidException e){
         log.error("数据参数不正确: -----{}",e.getMessage());
@@ -36,8 +37,7 @@ public class GlobalExceptionHandler {
         return Result.fail("401",objectError.getDefaultMessage(),null);
     }
 
-
-
+    @ResponseStatus(HttpStatus.UNAUTHORIZED) // test
     @ExceptionHandler(value = IllegalArgumentException.class)
     public Result handler(IllegalArgumentException e){
         log.error("assert参数不正确: -----{}",e.getMessage());

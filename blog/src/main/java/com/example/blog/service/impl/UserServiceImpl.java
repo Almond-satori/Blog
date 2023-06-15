@@ -44,8 +44,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getUsername,loginDTO.getUsername());
         User res = this.getOne(queryWrapper);
-        Assert.notNull(res, "用户不存在");
-
+        if(res == null){
+            return Result.fail("用户名或密码错误");
+        }
         String psw = SecureUtil.md5(loginDTO.getPassword());
         if(!psw.equals(res.getPassword())){
             return Result.fail("用户名或密码错误");

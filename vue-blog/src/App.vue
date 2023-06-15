@@ -1,20 +1,21 @@
 <template>
-  <div id="app">
+  <div id="app" class="global">
     <router-view/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
   }
 }
 </script>
 
 <style>
-
+  .global{
+    max-width: 960px;
+    margin: 0 auto;
+  }
 </style>

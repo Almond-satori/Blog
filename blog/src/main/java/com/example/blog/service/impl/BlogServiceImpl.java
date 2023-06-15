@@ -30,9 +30,9 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
         // 非法查询定位到第一页
         if(currentPage < 1 || currentPage == null) currentPage = 1;
 
-        Page page = new Page(currentPage, 5);
-        IPage pageData = this.page(page, new QueryWrapper<Blog>().orderByDesc("created"));
-        return Result.success(pageData);
+        Page<Blog> page = new Page(currentPage, 5,0);
+        page(page, new QueryWrapper<Blog>().orderByDesc("created"));
+        return Result.success(page);
     }
 
     @Override

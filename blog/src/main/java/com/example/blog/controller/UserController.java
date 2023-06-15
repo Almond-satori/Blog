@@ -37,7 +37,8 @@ public class UserController {
     @CrossOrigin
     @PostMapping("/login")
     public Result login(@Validated @RequestBody LoginDto loginDTO, HttpServletResponse response){
-            return userService.login(loginDTO,response);
+        Result login = userService.login(loginDTO, response);
+        return login;
     }
 
     @GetMapping("/logout")
