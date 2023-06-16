@@ -1,5 +1,6 @@
 package com.example.blog.controller;
 
+import com.example.blog.bean.User;
 import com.example.blog.dto.LoginDto;
 import com.example.blog.dto.Result;
 import com.example.blog.service.UserService;
@@ -28,11 +29,11 @@ public class UserController {
         return userService.getUserInfoById(id);
     }
 
-//
-//    @PostMapping("/save")
-//    public String save(@Validated @RequestBody User user){
-//        return user.toString();
-//    }
+
+    @PostMapping("/register")
+    public Result save(@Validated @RequestBody User user){
+        return userService.register(user);
+    }
 
     @CrossOrigin
     @PostMapping("/login")

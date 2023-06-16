@@ -4,7 +4,8 @@
       <el-header>
         <img class="mlog" src="@/static/logo.png" />
       </el-header>
-      <el-main>
+
+      <el-card class="box-card">
         <el-form
           :model="ruleForm"
           :rules="rules"
@@ -20,16 +21,18 @@
             <el-input type="password" v-model="ruleForm.password"></el-input>
           </el-form-item>
 
+          <el-form-item label="邮箱" prop="email">
+            <el-input v-model="ruleForm.email"></el-input>
+          </el-form-item>
+
           <el-form-item>
             <el-button type="primary" @click="submitForm('ruleForm')">
-              立即登录
+              完成注册
             </el-button>
             <el-button @click="resetForm('ruleForm')">重置</el-button>
-            <el-button @click="guestLogin()">游客登录</el-button>
-            <el-button @click="register()">注册</el-button>
           </el-form-item>
         </el-form>
-      </el-main>
+      </el-card>
     </el-container>
   </div>
 </template>
@@ -42,6 +45,7 @@ export default {
       ruleForm: {
         username: "",
         password: "",
+        email: "",
       },
       rules: {
         username: [
@@ -56,6 +60,14 @@ export default {
         password: [
           { required: true, message: "请输入密码", trigger: "change" },
         ],
+        email: [
+          { required: true, message: "请输入邮箱地址", trigger: "blur" },
+          {
+            type: "email",
+            message: "请输入正确的邮箱地址",
+            trigger: ["blur", "change"],
+          },
+        ],
       },
     };
   },
@@ -65,29 +77,22 @@ export default {
         if (valid) {
           const _this = this; // 获取全局this对象
           this.$axios
-            .post("/user/login", this.ruleForm)
+            .post("/user/register", this.ruleForm)
             .then((res) => {
-              const token = res.headers["authorization"];
-
-              // 将token以及后台的user信息存储在全局(即存在store里)
-              _this.$store.commit("SET_TOKEN", token);
-              _this.$store.commit("SET_USERINFO", res.data.data);
-              // 删除表单信息u
-              this.ruleForm.username = "";
-              this.ruleForm.password = "";
-
-              _this.$router.push("/blogs");
+              this.$message({
+                showClose: true,
+                message: "注册成功,请登录",
+                type: "success",
+              });
+              _this.$router.push("/login");
             })
-            .catch((error) => {
-              console.log(error);
-            });
+            .catch((error) => {});
         } else {
           this.$message({
             showClose: true,
             message: "输入不合法，请重新输入",
             type: "error",
           });
-          return false;
         }
       });
     },
@@ -97,9 +102,6 @@ export default {
     guestLogin() {
       this.$router.push({ name: "index" });
     },
-    register() {
-      this.$router.push({ name: "userRegister" });
-    },
   },
 };
 </script>
@@ -108,7 +110,7 @@ export default {
 .el-header,
 .el-footer {
   background-color: #b3c0d1;
-  color: #333;
+  color: #fffefe;
   text-align: center;
   line-height: 60px;
 }

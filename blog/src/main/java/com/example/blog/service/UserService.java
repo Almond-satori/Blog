@@ -13,6 +13,9 @@ public interface UserService extends IService<User> {
     Result login(LoginDto loginDTO, HttpServletResponse response);
 
     User getUserById(Long id);
+
+    Result register(User user);
+
 }
 
 

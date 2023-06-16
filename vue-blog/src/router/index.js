@@ -5,6 +5,7 @@ import Login from '../views/Login.vue'
 import Blogs from '../views/Blogs.vue'
 import BlogDetail from '../views/BlogDetail.vue'
 import BlogEdit from '../views/BlogEdit.vue'
+import Register from '../views/Register.vue'
 
 Vue.use(VueRouter)
 
@@ -24,17 +25,27 @@ const routes = [
     name: 'Login',
     component: Login
   },
+  {
+    path: '/blog/edit',
+    name: 'Blogadd',
+    component: BlogEdit
+  },
   // :blogId参数传入
   // 路由配置BlogDetail先于BlogEdit，为了匹配
   {
-    path: '/Blog/:blogId',
+    path: '/blog/:blogId',
     name: 'BlogDetail',
     component: BlogDetail
   },
   {
-    path: '/Blog/:blogId/edit',
+    path: '/blog/:blogId/edit',
     name: 'BlogEdit',
     component: BlogEdit
+  },
+  {
+    path: '/user/register',
+    name: 'userRegister',
+    component: Register
   }
 ]
 

@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
@@ -78,5 +79,32 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User user = getById(id);
         Assert.notNull(user.getId(),"查询的用户不存在");
         return user;
+    }
+
+    /**
+     * 用户注册方法
+     * @param user
+     * @return
+     */
+    @Override
+    public Result register(User user) {
+        // 查看是否重名
+        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(User::getUsername,user.getUsername());
+        User one = getOne(wrapper);
+        if(one != null) {
+            return Result.fail("用户名已经存在");
+        }
+
+        // 密码处理
+        String psw = SecureUtil.md5(user.getPassword());
+        user.setPassword(psw);
+
+        // 设置status 和 created
+        user.setStatus(0);
+        user.setCreated(LocalDateTime.now());
+
+        save(user);
+        return Result.success("成功注册");
     }
 }

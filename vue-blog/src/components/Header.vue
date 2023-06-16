@@ -8,7 +8,7 @@
     <div>
       <span><el-link type="primary" href="/blogs">主页</el-link></span>
       <el-divider direction="vertical"></el-divider>
-      <span><el-link type="success" href="/blog/add">发布博客</el-link></span>
+      <span><el-link type="success" @click="edit">发布博客</el-link></span>
       <el-divider direction="vertical"></el-divider>
       <span v-show="user.haslogin"><el-link type="danger" @click="logout">退出</el-link></span>
       <span v-show="!user.haslogin"><el-link type="info" href="/login">登录</el-link></span>
@@ -44,6 +44,18 @@ export default {
           _this.$router.push("/login");
         })
         .catch((res) => {});
+    },
+    edit(){
+      if(this.user.haslogin){
+        console.log("已经登录");
+        this.$router.push({ name: 'Blogadd' })
+      }else{
+        this.$message({
+          showClose: true,
+          message: '请先登录',
+          type: 'warning'
+        });
+      }
     },
   },
   // 在页面创建的时候自动调用created

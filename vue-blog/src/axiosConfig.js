@@ -13,6 +13,7 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(
     response => {
+        console.log("response 捕获到信息");
         let res = response.data;
 
         if (res.code == 200) {
@@ -37,6 +38,10 @@ axios.interceptors.response.use(
         // 权限错误
         if (error.response.status === 403) {
             error.message = '没有访问权限'
+        }
+
+        if (error.response.status === 400) {
+            error.message = '发生错误,请重试'
         }
 
         // 如果有的话,使用我们自定义的错误信息
