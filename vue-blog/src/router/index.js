@@ -6,6 +6,7 @@ import Blogs from '../views/Blogs.vue'
 import BlogDetail from '../views/BlogDetail.vue'
 import BlogEdit from '../views/BlogEdit.vue'
 import Register from '../views/Register.vue'
+import UserInfo from '../views/UserInfo.vue'
 
 Vue.use(VueRouter)
 
@@ -46,6 +47,11 @@ const routes = [
     path: '/user/register',
     name: 'userRegister',
     component: Register
+  },
+  {
+    path: '/user/userInfo',
+    name: 'userInfo',
+    component: UserInfo
   }
 ]
 

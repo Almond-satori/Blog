@@ -19,3 +19,9 @@ almond:
     # token有效时长，7天，单位秒
     expire: 604800
     header: token
+  # 设置头像文件位置
+  avatar-path: D:\blogProject\avatar\
+  # 服务器地址
+  server-path: http://localhost:8080/
+  # 博客图片地址
+  img-path: D:\blogProject\blog\

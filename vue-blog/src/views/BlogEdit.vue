@@ -17,7 +17,7 @@
       </el-form-item>
 
       <el-form-item label="内容" prop="content">
-        <mavon-editor v-model="ruleForm.content"></mavon-editor>
+        <mavon-editor v-model="ruleForm.content" @imgAdd="imgAdd" @imgDel="imgDel"></mavon-editor>
       </el-form-item>
 
       <el-form-item>
@@ -121,6 +121,12 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
+    imgAdd(){
+
+    },
+    imgDel(){
+      
+    }
   },
   created() {
     this.ruleForm.userId  = this.$store.getters.getUser.id

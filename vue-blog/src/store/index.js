@@ -10,11 +10,14 @@ export default new Vuex.Store({
     token: '',
     // 一开始就去sessionStorage中查找userInfo作为初始值(相当于get方法)
     // 这里的存储是string，取数据的时候要将其转换为JSON
-    userInfo: JSON.parse(sessionStorage.getItem("userInfo"))
+    userInfo: JSON.parse(sessionStorage.getItem("userInfo")),
   },
   getters: {
     getUser: state => {
       return state.userInfo;
+    },
+    getServerURL: state => {
+      return state.serverURL;
     }
   },
   mutations: {

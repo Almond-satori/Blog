@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequestMapping("/blog")
 @RestController
@@ -58,6 +59,20 @@ public class BlogController {
     @DeleteMapping("/{blogId}")
     public Result delete(@PathVariable(name = "blogId") Integer blogId){
         return blogService.deleteBlog(blogId);
+    }
+
+    @RequiresAuthentication
+    @PostMapping("/{blogId}/image")
+    public Result uploadImg(@PathVariable(name = "blogId") Integer blogId,
+                            @RequestParam("file") MultipartFile file){
+        return blogService.uploadImg(blogId,file);
+    }
+
+    @RequiresAuthentication
+    @GetMapping("/{blogId}/{filename}")
+    public Result getImg(@PathVariable(name = "blogId") Long blogId,
+                         @PathVariable(name = "fileName") String filename){
+        return blogService.downloadImg(blogId,filename);
     }
 
 }

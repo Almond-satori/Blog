@@ -2,10 +2,14 @@
   <div class="m-content">
     <h3>欢迎！</h3>
     <div class="block">
-      <el-avatar :size="50" :src="user.avatar"></el-avatar>
+      <el-avatar :size="50" :src="user.avatar" ></el-avatar>
     </div>
     <div>{{ user.username }}</div>
     <div>
+      <span v-show="user.haslogin" >
+        <span ><el-link type="primary" href="/user/userInfo">用户信息</el-link></span>
+        <el-divider v-show="user.haslogin" direction="vertical"></el-divider>
+      </span>
       <span><el-link type="primary" href="/blogs">主页</el-link></span>
       <el-divider direction="vertical"></el-divider>
       <span><el-link type="success" @click="edit">发布博客</el-link></span>
@@ -63,7 +67,12 @@ export default {
     // 将全局的用户信息赋值到当前信息中
     if (this.$store.getters.getUser.username) {
       this.user.username = this.$store.getters.getUser.username;
-      this.user.avatar = this.$store.getters.getUser.avatar;
+     
+      // 拼接资源地址
+      var id = this.$store.getters.getUser.id.toString();
+      var server = 'http://localhost:8080/user/';
+      
+      this.user.avatar = server + id + "/avatar";
       this.user.haslogin = true
     }
   },

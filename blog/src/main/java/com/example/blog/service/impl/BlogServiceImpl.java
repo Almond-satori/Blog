@@ -3,7 +3,6 @@ package com.example.blog.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.blog.bean.Blog;
@@ -11,19 +10,28 @@ import com.example.blog.dto.Result;
 import com.example.blog.mapper.BlogMapper;
 import com.example.blog.service.BlogService;
 import com.example.blog.shiro.UserInfo;
+import com.example.blog.utils.FileUploadUtil;
 import com.example.blog.utils.UserHolder;
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements BlogService {
 
     @Autowired
     private UserHolder userHolder;
+
+    @Value("${almond.img-path}")
+    private String IMG_PATH;
+
+    @Value("${almond.server-path}")
+    private String SERVER_PATH;
 
     @Override
     public Result getPage(Integer currentPage) {
@@ -83,5 +91,39 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
 
         removeById(blogId);
         return Result.success("成功删除博客");
+    }
+
+    /**
+     * 在博客中插入图片,存储图片,将获取图片的url返回给前端
+     * @param blogId
+     * @param file
+     * @return
+     */
+    @Override
+    public Result uploadImg(Integer blogId, MultipartFile file) {
+        Blog blog = getById(blogId);
+        if(blog == null) return Result.fail("错误，不存在该博客");
+
+
+        String originalFilename = file.getOriginalFilename();
+        if(originalFilename == null) return Result.fail("文件名异常");
+
+        String[] pair = FileUploadUtil.divideFileName(originalFilename);
+
+        String uuid = UUID.randomUUID().toString();
+        String newFileName = pair[0] + "-" + uuid + "\\." + pair[1];
+        String pathPrefix = IMG_PATH + blogId;
+
+        //在指定位置创建文件
+        FileUploadUtil.createAndTransferFile(pathPrefix,newFileName, file);
+
+        // 向前端传回找到该图片的url
+        return Result.success("成功创建图片",
+                SERVER_PATH + blogId + "/" + newFileName);
+    }
+
+    @Override
+    public Result downloadImg(Long blogId, String filename) {
+        return null;
     }
 }

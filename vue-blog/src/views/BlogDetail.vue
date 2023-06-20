@@ -7,6 +7,7 @@
         <el-link type="primary" v-show="showEdit">
             <router-link :to="{name:'BlogEdit',params:{blogId:blog.id}}">编辑</router-link>
         </el-link>
+
       <el-divider></el-divider>
 
       <el-card class="box-card">  
