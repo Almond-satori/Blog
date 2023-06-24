@@ -70,7 +70,7 @@ export default {
   },
   created(){
     this.userId = this.$store.getters.getUser.id;
-    this.uploadUrl = "http://localhost:8080/user/" + this.userId + "/avatar"
+    this.uploadUrl = "http://47.94.59.162:8080/user/" + this.userId + "/avatar"
   }
 };
 </script>

@@ -3,6 +3,7 @@ package com.example.blog.controller;
 import com.example.blog.bean.User;
 import com.example.blog.dto.LoginDto;
 import com.example.blog.dto.Result;
+import com.example.blog.dto.UserDto;
 import com.example.blog.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -16,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
 
     @Autowired
@@ -61,5 +62,11 @@ public class UserController {
     public ResponseEntity<byte[]> getAvatar(@PathVariable("id") Long userId){
         return userService.getAvatar(userId);
     }
+
+    @PutMapping()
+    public Result updateUser(@Validated @RequestBody UserDto userDto){
+        return userService.updateUser(userDto);
+    }
+
 
 }

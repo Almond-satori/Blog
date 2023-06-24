@@ -9,12 +9,13 @@ import com.example.blog.shiro.UserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@RequestMapping("/blog")
+@RequestMapping("/api/blog")
 @RestController
 public class BlogController {
 
@@ -57,22 +58,21 @@ public class BlogController {
 
     @RequiresAuthentication
     @DeleteMapping("/{blogId}")
-    public Result delete(@PathVariable(name = "blogId") Integer blogId){
+    public Result delete(@PathVariable(name = "blogId") Long blogId){
         return blogService.deleteBlog(blogId);
     }
 
     @RequiresAuthentication
-    @PostMapping("/{blogId}/image")
-    public Result uploadImg(@PathVariable(name = "blogId") Integer blogId,
-                            @RequestParam("file") MultipartFile file){
-        return blogService.uploadImg(blogId,file);
+    @PostMapping("/image")
+    public Result uploadImg(@RequestParam("file") MultipartFile file){
+        return blogService.uploadImg(file);
     }
 
-    @RequiresAuthentication
-    @GetMapping("/{blogId}/{filename}")
-    public Result getImg(@PathVariable(name = "blogId") Long blogId,
-                         @PathVariable(name = "fileName") String filename){
-        return blogService.downloadImg(blogId,filename);
+    @CrossOrigin
+    @GetMapping("/image/{filename}")
+    public ResponseEntity<byte[]> getImg(
+                                         @PathVariable(name = "filename") String filename){
+        return blogService.downloadImg(filename);
     }
 
 }

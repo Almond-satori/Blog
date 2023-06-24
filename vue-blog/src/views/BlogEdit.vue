@@ -17,7 +17,12 @@
       </el-form-item>
 
       <el-form-item label="内容" prop="content">
-        <mavon-editor v-model="ruleForm.content" @imgAdd="imgAdd" @imgDel="imgDel"></mavon-editor>
+        <mavon-editor
+          v-model="ruleForm.content"
+          ref="md"
+          @imgAdd="imgAdd"
+          @imgDel="imgDel"
+        ></mavon-editor>
       </el-form-item>
 
       <el-form-item>
@@ -73,7 +78,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // 如果是创建博客
-          if(this.ruleForm.id === ''){
+          if (this.ruleForm.id === "") {
             this.$axios
               .post("/blog", this.ruleForm, {
                 headers: {
@@ -88,10 +93,8 @@ export default {
                   },
                 });
               })
-              .catch((r) => {
-  
-              });
-          }else {
+              .catch((r) => {});
+          } else {
             // 如果是修改博客
             this.$axios
               .put("/blog", this.ruleForm, {
@@ -107,11 +110,8 @@ export default {
                   },
                 });
               })
-              .catch((r) => {
-  
-              });
+              .catch((r) => {});
           }
-          
         } else {
           console.log("");
           return false;
@@ -121,28 +121,43 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    imgAdd(){
-
+    imgAdd(pos, $file) {
+      var _this = this;
+      var formdata = new FormData();
+      formdata.append("file", $file);
+      this.$axios
+        .post("/blog/image", formdata, {
+          headers: {  
+            Authorization: localStorage.getItem("token"),
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          // console.log(res.data.data);
+          // 将返回的url替换到文本原位置![...](0) -> ![...](url)
+          var url = res.data.data;
+          console.log(url);
+          _this.$refs.md.$img2Url(pos, url);
+        })
+        .catch((e) => {});
     },
-    imgDel(){
-      
-    }
+    imgDel() {},
   },
   created() {
-    this.ruleForm.userId  = this.$store.getters.getUser.id
-    
-    if(this.$route.params.blogId != null){
+    this.ruleForm.userId = this.$store.getters.getUser.id;
+
+    if (this.$route.params.blogId != null) {
       // 如果编辑的是已经存在的页面，回显页面的信息
       this.ruleForm.id = this.$route.params.blogId;
-      
-      this.$axios.get('/blog/' + this.ruleForm.id).then((res) => {
+
+      this.$axios.get("/blog/" + this.ruleForm.id).then((res) => {
         // this.ruleForm.id = res.data.data.id
-        this.ruleForm.title = res.data.data.title
-        this.ruleForm.description = res.data.data.description
-        this.ruleForm.content = res.data.data.content
-      })
+        this.ruleForm.title = res.data.data.title;
+        this.ruleForm.description = res.data.data.description;
+        this.ruleForm.content = res.data.data.content;
+      });
     }
-  }
+  },
 };
 </script>
 

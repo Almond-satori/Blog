@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.blog.bean.User;
 import com.example.blog.dto.LoginDto;
 import com.example.blog.dto.Result;
+import com.example.blog.dto.UserDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +22,8 @@ public interface UserService extends IService<User> {
     Result uploadAvatar(MultipartFile file,Long userId);
 
     ResponseEntity<byte[]> getAvatar(Long userId);
+
+    Result updateUser(UserDto userDto);
 }
 
 

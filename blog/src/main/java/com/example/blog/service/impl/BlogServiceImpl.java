@@ -1,6 +1,7 @@
 package com.example.blog.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -14,6 +15,8 @@ import com.example.blog.utils.FileUploadUtil;
 import com.example.blog.utils.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -82,7 +85,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
     }
 
     @Override
-    public Result deleteBlog(Integer blogId) {
+    public Result deleteBlog(Long blogId) {
         UserInfo userInfo = userHolder.getUserInfo();
         Blog dataBlog = getById(blogId);
 
@@ -95,14 +98,12 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
 
     /**
      * 在博客中插入图片,存储图片,将获取图片的url返回给前端
-     * @param blogId
      * @param file
      * @return
      */
     @Override
-    public Result uploadImg(Integer blogId, MultipartFile file) {
-        Blog blog = getById(blogId);
-        if(blog == null) return Result.fail("错误，不存在该博客");
+    public Result uploadImg(MultipartFile file) {
+
 
 
         String originalFilename = file.getOriginalFilename();
@@ -111,19 +112,28 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
         String[] pair = FileUploadUtil.divideFileName(originalFilename);
 
         String uuid = UUID.randomUUID().toString();
-        String newFileName = pair[0] + "-" + uuid + "\\." + pair[1];
-        String pathPrefix = IMG_PATH + blogId;
+        String newFileName = pair[0] + "-" + uuid + "." + pair[1];
+        String pathPrefix = IMG_PATH;
 
         //在指定位置创建文件
         FileUploadUtil.createAndTransferFile(pathPrefix,newFileName, file);
 
         // 向前端传回找到该图片的url
         return Result.success("成功创建图片",
-                SERVER_PATH + blogId + "/" + newFileName);
+                SERVER_PATH + "blog/image/" + newFileName);
     }
 
+    /**
+     * 将图片返回
+     * @param filename 文件名
+     * @return
+     */
     @Override
-    public Result downloadImg(Long blogId, String filename) {
-        return null;
+    public ResponseEntity<byte[]> downloadImg(String filename) {
+
+        String fileLocation = IMG_PATH + filename;
+        byte[] bytes = FileUtil.readBytes(fileLocation);
+
+        return ResponseEntity.ok(bytes);
     }
 }

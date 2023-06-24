@@ -19,7 +19,7 @@ import java.util.Date;
 @TableName("m_user")
 public class User {
 
-    @TableId(value = "id",type = IdType.AUTO)
+    @TableId(value = "id",type = IdType.ASSIGN_ID)
     private Long id;
 
     @NotBlank(message = "用户名不能为空")

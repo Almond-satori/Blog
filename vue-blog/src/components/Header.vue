@@ -10,11 +10,11 @@
         <span ><el-link type="primary" href="/user/userInfo">用户信息</el-link></span>
         <el-divider v-show="user.haslogin" direction="vertical"></el-divider>
       </span>
-      <span><el-link type="primary" href="/blogs">主页</el-link></span>
+      <span><el-link type="primary" href="/blogs">博客主页</el-link></span>
       <el-divider direction="vertical"></el-divider>
       <span><el-link type="success" @click="edit">发布博客</el-link></span>
       <el-divider direction="vertical"></el-divider>
-      <span v-show="user.haslogin"><el-link type="danger" @click="logout">退出</el-link></span>
+      <span v-show="user.haslogin"><el-link type="danger" @click="logout">退出账号</el-link></span>
       <span v-show="!user.haslogin"><el-link type="info" href="/login">登录</el-link></span>
     </div>
   </div>
@@ -70,7 +70,7 @@ export default {
      
       // 拼接资源地址
       var id = this.$store.getters.getUser.id.toString();
-      var server = 'http://localhost:8080/user/';
+      var server = 'http://47.94.59.162:8080/user/';
       
       this.user.avatar = server + id + "/avatar";
       this.user.haslogin = true

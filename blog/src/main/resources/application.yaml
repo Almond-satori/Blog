@@ -4,14 +4,24 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/blog?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
-    password: 123456
+    password: T8LFr8iZJV1Bj7cYtZMT
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**Mapper.xml
+
+server:
+  port: 8080
+
 shiro-redis:
   enabled: true
   redis-manager:
-    host: 192.168.200.130:6379
-    password: 123456
+#    本机环境
+#    host: 192.168.200.130:6379
+#    password: 123456
+
+#    阿里云服务器
+  host: 47.94.59.162:6379
+  password: X51aLpaCfV4njVY5aLpp
+
 almond:
   jwt:
     # 加密秘钥
@@ -19,9 +29,14 @@ almond:
     # token有效时长，7天，单位秒
     expire: 604800
     header: token
+
   # 设置头像文件位置
-  avatar-path: D:\blogProject\avatar\
-  # 服务器地址
-  server-path: http://localhost:8080/
+  #  avatar-path: D:\blogProject\avatar\
   # 博客图片地址
-  img-path: D:\blogProject\blog\
+  #  img-path: D:\blogProject\blog\
+  # 服务器地址
+  #  server-path: http://localhost:8080/
+
+  server-path: http://47.94.59.162:8080/
+  avatar-path: /blog/data/user/
+  img-path: /blog/data/blog/

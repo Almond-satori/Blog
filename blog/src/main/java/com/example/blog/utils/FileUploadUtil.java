@@ -34,7 +34,7 @@ public class FileUploadUtil {
 
     /**
      * 将文件上传到指定位置
-     * @param prefix 文件上传位置
+     * @param dirPath 文件上传目录
      * @param newFilename 新建的文件名字
      * @param file 上穿的文件
      */

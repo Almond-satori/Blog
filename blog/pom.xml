@@ -52,6 +52,7 @@
             <version>8.0.11</version>
         </dependency>
 
+
         <!--整合shiro-redis-->
         <dependency>
             <groupId>org.crazycake</groupId>
@@ -95,7 +96,10 @@
                     </excludes>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
+
+
 
 </project>

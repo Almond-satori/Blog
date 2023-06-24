@@ -25,7 +25,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = ShiroException.class)
     public Result handler(ShiroException e){
         log.error("shiro认证或授权异常: -----{}",e.getMessage());
-        return Result.fail("401",e.getMessage(),null);
+        log.error(e.toString());
+        return Result.fail("401","未登录或登录过期,请重新登陆",null);
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED) // test

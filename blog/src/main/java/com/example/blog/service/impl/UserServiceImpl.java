@@ -142,20 +142,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String filename = pair[0] + "-" + uuid + "." + pair[1];
 
         FileUploadUtil.createAndTransferFile(AVATAR_PATH,filename, file);
-//        // 如果目录不存在创建目录
-//        File avatarDir = new File(AVATAR_PATH);
-//        if(!avatarDir.exists()){
-//            avatarDir.mkdirs();
-//        }
-//
-//        File targetFile = new File(AVATAR_PATH, filename);
-//        try {
-//            file.transferTo(targetFile);
-//        } catch (IOException ioException) {
-//            log.error("创建头像文件时出现异常");
-//            ioException.printStackTrace();
-//            return Result.fail("创建头像文件时出现异常");
-//        }
 
         // 更新获取头像信息的url
         user.setAvatarLocation(AVATAR_PATH + filename);
@@ -176,4 +162,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         return ResponseEntity.ok(bytes);
     }
+
+    @Override
+    public Result updateUser(UserDto userDto) {
+        Long id = userDto.getId();
+        User user = getById(id);
+        if(user == null){
+            return Result.fail("错误，未能查找到此用户");
+        }
+        user.setUsername(userDto.getUsername());
+        updateById(user);
+        return Result.success("成功修改用户信息", user);
+    }
+
+
 }

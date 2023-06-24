@@ -84,8 +84,7 @@ export default {
           let md = new markdown();
           let elements = res.data.data.records;
           var arr = [];
-          for (let i = 0; i < _this.pageSize; ++i) {
-            console.log(elements[i]);
+          for (let i = 0; i < res.data.data.records.length; ++i) {
             // 将 Markdown 转换为 HTML 以提取纯文本摘要
             var html = md.render(elements[i].content);
             const div = document.createElement("div");
