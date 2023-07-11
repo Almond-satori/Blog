@@ -42,6 +42,7 @@
 </style>
 
 <script>
+
 export default {
   name: "MyUploadAvatar",
   data() {
@@ -70,7 +71,7 @@ export default {
   },
   created(){
     this.userId = this.$store.getters.getUser.id;
-    this.uploadUrl = "http://47.94.59.162:8080/user/" + this.userId + "/avatar"
+    this.uploadUrl = "http://47.94.59.162:8080/api/user/" + this.userId + "/avatar"
   }
 };
 </script>

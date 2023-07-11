@@ -41,9 +41,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Value("${almond.avatar-path}")
     private String AVATAR_PATH;
 
-    @Value("${almond.server-path}")
-    private String SERVER_PATH;
-
 
     @Override
     public Result getUserInfoById(Long id) {
@@ -71,12 +68,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String token = jwtUtils.generateJwtToken(res.getId());
 
         response.setHeader("Authorization", token);
-        /**
-         * 设置允许Authorization跨域:
-         * 如果在跨域请求中需要访问响应头中的自定义字段，例如Authorization，
-         * 那么除了设置Access-Control-Allow-Headers以允许该字段之外，
-         * 还需要设置Access-Control-Expose-Headers来将该字段暴露给前端。
-         */
         response.setHeader("Access-Control-Expose-Headers","Authorization");
 
         return Result.success(new MapUtil().builder()
@@ -86,6 +77,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .map()
         );
     }
+
+    /**
+     * 设置允许Authorization跨域:
+     * 如果在跨域请求中需要访问响应头中的自定义字段，例如Authorization，
+     * 那么除了设置Access-Control-Allow-Headers以允许该字段之外，
+     * 还需要设置Access-Control-Expose-Headers来将该字段暴露给前端。
+     */
 
     @Override
     public User getUserById(Long id) {
@@ -147,7 +145,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setAvatarLocation(AVATAR_PATH + filename);
         updateById(user);
 
-        return Result.success("test", null);
+        return Result.success("上传头像成功", null);
     }
 
     @Override

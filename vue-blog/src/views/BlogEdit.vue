@@ -136,7 +136,6 @@ export default {
           // console.log(res.data.data);
           // 将返回的url替换到文本原位置![...](0) -> ![...](url)
           var url = res.data.data;
-          console.log(url);
           _this.$refs.md.$img2Url(pos, url);
         })
         .catch((e) => {});

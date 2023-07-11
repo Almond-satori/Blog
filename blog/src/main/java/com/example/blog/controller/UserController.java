@@ -63,6 +63,7 @@ public class UserController {
         return userService.getAvatar(userId);
     }
 
+    @CrossOrigin
     @PutMapping()
     public Result updateUser(@Validated @RequestBody UserDto userDto){
         return userService.updateUser(userDto);

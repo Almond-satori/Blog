@@ -48,7 +48,6 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
 
     @Override
     public Result editBlog(Blog blog) {
-        //        System.out.println(blog.toString());
         // 获取当前访问的用户id
         UserInfo userInfo = userHolder.getUserInfo();
 
@@ -103,9 +102,6 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
      */
     @Override
     public Result uploadImg(MultipartFile file) {
-
-
-
         String originalFilename = file.getOriginalFilename();
         if(originalFilename == null) return Result.fail("文件名异常");
 
@@ -120,7 +116,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
 
         // 向前端传回找到该图片的url
         return Result.success("成功创建图片",
-                SERVER_PATH + "blog/image/" + newFileName);
+                SERVER_PATH + "api/blog/image/" + newFileName);
     }
 
     /**

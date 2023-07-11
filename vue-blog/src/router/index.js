@@ -49,7 +49,7 @@ const routes = [
     component: Register
   },
   {
-    path: '/user/userInfo',
+    path: '/userInfo',
     name: 'userInfo',
     component: UserInfo
   }
@@ -58,7 +58,7 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  // base: './',
+  // base: './',  
   routes
 })
 

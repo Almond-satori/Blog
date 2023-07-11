@@ -39,7 +39,7 @@
 
 <script>
 export default {
-  name: "Login.vue",
+  // name: "Login.vue",
   data() {
     return {
       ruleForm: {

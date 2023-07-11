@@ -9,7 +9,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
 import './axiosConfig'
-import {mavonEditor} from 'mavon-editor'
+import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import 'github-markdown-css';
 

@@ -28,9 +28,10 @@
 </template> 
 
 <script>
-import MyUploadAvatar from '@/components/MyUploadAvatar.vue';
+import MyUploadAvatar from "@/components/MyUploadAvatar.vue";
 
 export default {
+  name: "UserInfo.vue",
   components: { MyUploadAvatar },
   data() {
     return {

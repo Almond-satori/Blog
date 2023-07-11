@@ -7,7 +7,7 @@
     <div>{{ user.username }}</div>
     <div>
       <span v-show="user.haslogin" >
-        <span ><el-link type="primary" href="/user/userInfo">用户信息</el-link></span>
+        <span ><el-link type="primary" href="/userInfo">用户信息</el-link></span>
         <el-divider v-show="user.haslogin" direction="vertical"></el-divider>
       </span>
       <span><el-link type="primary" href="/blogs">博客主页</el-link></span>
@@ -70,7 +70,7 @@ export default {
      
       // 拼接资源地址
       var id = this.$store.getters.getUser.id.toString();
-      var server = 'http://47.94.59.162:8080/user/';
+      var server = 'http://47.94.59.162:8080/api/user/';
       
       this.user.avatar = server + id + "/avatar";
       this.user.haslogin = true
